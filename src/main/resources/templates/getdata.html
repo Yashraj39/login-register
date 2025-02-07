@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Display Data</title>
+</head>
+<body>
+  <h1>Display Data</h1>
+  <div id="data"></div>
+
+  <script>
+    window.onload = function fetchData() {
+      fetch('http://localhost:8080/api')
+        .then(response => response.json())
+        .then(data => {
+          let result = "";
+          data.forEach(entry => {
+            result += "ID: " + entry.id + "<br>" +
+                      "Username: " + entry.username + "<br>" +
+                      "Password: " + entry.password + "<br><br>";
+          });
+          document.getElementById("data").innerHTML = result;
+        })
+        .catch(error => console.error("Error:", error));
+    }
+  </script>
+</body>
+</html>

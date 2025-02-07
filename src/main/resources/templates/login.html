@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <form id="loginform">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" minlength="6" maxlength="6" required>
+            </div>
+
+            <div class="remember-me">
+                <label><input id="check" type="checkbox" name="remember"> Remember me</label>
+                <a id="pw" href="#">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="submit">Login</button>
+
+            <div class="register">
+                <p>Don't have an account? <a id="reg" href="index.html">Register</a></p>
+            </div>               
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginform').onsubmit = function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8080/api/login', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('Login successful: ' + xhr.responseText);
+                    // window.location.href = 'home.html'; // Uncomment to redirect on success
+                } else {
+                    alert('Login failed: ' + xhr.responseText);
+                }
+            };
+            xhr.onerror = function() {
+                alert('An error occurred during the request.');
+            };
+
+            xhr.send(JSON.stringify({ username: username, password: password }));
+        };
+    </script>      
+
+</body>
+</html>
